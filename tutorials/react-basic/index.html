@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Simple React App</title>
+    <link rel="stylesheet" href="css/style.css">
+
+     <!-- Attach source code for react -->
+    <script src="js/build/react.js"></script>
+    <script src="js/build/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  </head>
+  <body>
+
+   <!-- HTML web page we built earlier. style is from style.css -->
+    <div id="header">
+       <img id="profileImg" src="http://www.celena.co/images/steven.png"/>
+      <div id="bio">
+        <p id="name">Steven Kang's web page</p>
+        <p>Frontend engineer and iOS developer</p>
+      </div>
+    </div>
+
+     <!-- the DOM node that React attaches to -->
+     <div id="react-root"></div>
+
+     <!-- Your React Code -->
+     <script type="text/babel">
+
+        var ReactClass = React.createClass({
+          getInitialState(){
+            return {
+              visitors: [
+                'Kevin Tan',
+                'Rihanna',
+                'Elon Musk'
+              ]
+            }
+          },
+          addName(){
+            console.log('addname');
+            var visitors = this.state.visitors;
+            var newVisitor = this.refs.inputText.value;
+            visitors.push(newVisitor)
+            this.setState({ visitors : visitors})
+          },
+          handleKeyPress(e) {
+            if(e.key == "Enter"){
+              this.addName();
+            }
+          },
+          render(){
+            return(
+              <div id="react-container">
+                <h1>visitors</h1>
+                {this.state.visitors.map(function(visitor, i){
+                  return (
+                    <p key={i}>{visitor}</p>
+                  )
+                })}
+                <input
+                  type="text"
+                  placeholder="add your name"
+                  ref="inputText"
+                  onKeyPress={this.handleKeyPress}
+                />
+              </div>
+            )
+          }
+        })
+
+        ReactDOM.render(
+          <ReactClass/>,
+          document.getElementById('react-root')
+        );
+      </script>
+
+  </body>
+</html>
